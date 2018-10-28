@@ -1,37 +1,47 @@
-"""
-Python Web Development Techdegree
-Project 1 - Number Guessing Game
---------------------------------
-
-For this first project we will be using Workspaces. 
-
-NOTE: If you strongly prefer to work locally on your own computer, you can totally do that by clicking: File -> Download Workspace in the file menu after you fork the snapshot of this workspace.
-
-"""
-
 import random
+import sys
+
+
+attempt_history = []
+
 
 
 def start_game():
-    """Psuedo-code Hints
+    print("\nWelcome to the Number Guessing Game!\n")
+    number = random.randint(1,10)
+    guess = ()
+    attempts = 0
     
-    When the program starts, we want to:
-    ------------------------------------
-    1. Display an intro/welcome message to the player.
-    2. Store a random number as the answer/solution.
-    3. Continuously prompt the player for a guess.
-      a. If the guess greater than the solution, display to the player "It's lower".
-      b. If the guess is less than the solution, display to the player "It's higher".
-    
-    4. Once the guess is correct, stop looping, inform the user they "Got it"
-         and show how many attempts it took them to get the correct number.
-    5. Let the player know the game is ending, or something that indicates the game is over.
-    
-    ( You can add more features/enhancements if you'd like to. )
-    """
-    # write your code inside this function.
-
-
+    while guess != number:
+        try:
+            guess = input("Pick a number between 1 and 10: ")
+            guess = int(guess)
+            
+            if guess > 10:
+                raise ValueError
+            elif guess < 1:
+                raise ValueError
+            attempts += 1
+            if guess > number:
+                print("It's lower!")
+            elif guess < number:
+                print("It's higher!")
+            elif guess == number:
+                print("You got it! It took you {} tries.".format(attempts))
+                play_again = input("\nWould you like to play again? [y]es/[n]o: ")
+                if play_again.lower() == "y":
+                    attempt_history.append(attempts)
+                    # asceding sort method from stackoverflow.com
+                    # https://stackoverflow.com/questions/9758959/sort-a-list-of-numerical-strings-in-ascending-order
+                    attempt_history.sort(key=int)
+                    print("\nTHE HIGHSCORE IS {}".format(attempt_history[0]))
+                    start_game()
+                else:
+                    sys.exit("\nClosing game, thank you for playing!!!")
+        except ValueError:
+            print("\nOh no, that is not a valid input! Please try again.")
+        
+        
 if __name__ == '__main__':
-    # Kick off the program by calling the start_game function.
     start_game()
+    

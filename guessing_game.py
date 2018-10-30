@@ -17,12 +17,12 @@ def start_game():
     number = random.randint(1,10)
     guess = ()
     attempts = 0
-    
+
     while guess != number:
         try:
             guess = input("Pick a number between 1 and 10: ")
             guess = int(guess)
-            
+
             if guess > 10:
                 raise ValueError
             elif guess < 1:
@@ -46,8 +46,7 @@ def start_game():
                     sys.exit("\nClosing game, thank you for playing!!!")
         except ValueError:
             print("\nOh no, that is not a valid input! Please try again.")
-        
-        
+
+
 if __name__ == '__main__':
     start_game()
-    
